@@ -1,20 +1,30 @@
 const { getAll, getOneById } = require("../services/read.service.js");
 
-module.exports.getAll = async (req, res) => {
+module.exports.getAll = (req, res) => {
   try {
-    const allUsers = await getAll();
-
-    return res.status(200).send(allUsers);
+    return getAll()
+      .then((allUsers) => {
+        return res.status(200).send(allUsers);
+      })
+      .catch((err) => {
+        return res.status(401).send(err);
+      });
   } catch (err) {
     return res.status(500).send(err);
   }
 };
 
-module.exports.getOneById = async (req, res) => {
+module.exports.getOneById = (req, res) => {
   try {
-    const user = await getOneById(req.params.id);
+    const { id } = req.params;
 
-    return res.status(200).send(user);
+    return getOneById(id)
+      .then((usr) => {
+        return res.status(200).send(usr);
+      })
+      .catch((err) => {
+        return res.status(401).send(err);
+      });
   } catch (err) {
     return res.status(500).send(err);
   }
