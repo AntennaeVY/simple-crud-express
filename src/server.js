@@ -4,8 +4,15 @@ require("./database/database");
 
 const routes = require("./routes/routes");
 
+// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);
 
-app.listen(3000, console.log("App listening on PORT 3000"));
+// Settings
+require("dotenv").config({ path: `${__dirname}/.env` });
+app.set("PORT", process.env.PORT || 3000);
+
+app.listen(app.get("PORT"), () => {
+  console.log(`App listening on PORT ${app.get("PORT")}`);
+});

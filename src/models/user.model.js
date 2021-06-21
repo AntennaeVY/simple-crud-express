@@ -63,4 +63,10 @@ userSchema
     this._password = encryptPassword(value);
   });
 
+userSchema.methods.toJSON = function () {
+  const userObject = this.toObject();
+  delete userObject._password;
+  return userObject;
+};
+
 module.exports = mongoose.model("User", userSchema);

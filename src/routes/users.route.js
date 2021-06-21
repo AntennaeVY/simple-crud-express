@@ -1,15 +1,32 @@
 const { Router } = require("express");
 const router = Router();
 
-const { createUser } = require("../controllers/create.controller");
-const { getAll, getOneById } = require("../controllers/read.controller");
-const { updateOneById } = require("../controllers/update.controller");
-const { deleteOneById } = require("../controllers/delete.controller");
+// Controllers
+const { createUser } = require("../controllers/users/create.controller");
+const { updateOneById } = require("../controllers/users/update.controller");
+const { deleteOneById } = require("../controllers/users/delete.controller");
+const {
+  getAll,
+  getOneById,
+  getOneByEmail,
+} = require("../controllers/users/read.controller");
 
+// Middlewares
+const { isAuth } = require("../middlewares/auth.middleware");
+const { isAdmin } = require("../middlewares/admin.middleware");
+
+// Create
 router.post("/users", createUser);
-router.get("/users", getAll);
-router.get("/users/id/:id", getOneById);
-router.put("/users/id/:id", updateOneById);
-router.delete("/users/id/:id", deleteOneById);
+
+// Read
+router.get("/users", isAuth, getAll);
+router.get("/users/id/:id", isAuth, getOneById);
+router.post("/users/email", isAuth, getOneByEmail);
+
+// Update
+router.put("/users/id/:id", isAuth, updateOneById);
+
+// Delete
+router.delete("/users/id/:id", isAuth, isAdmin, deleteOneById);
 
 module.exports = router;

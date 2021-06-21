@@ -1,4 +1,4 @@
-const { createUser } = require("../services/create.service");
+const { createUser } = require("../../services/users/create.service");
 
 module.exports.createUser = (req, res) => {
   try {
@@ -7,7 +7,7 @@ module.exports.createUser = (req, res) => {
         return res.status(200).send(usr);
       })
       .catch((err) => {
-        return res.status(401).send(err);
+        return res.status(400).send(err);
       });
   } catch (err) {
     return res.status(500).send(err);

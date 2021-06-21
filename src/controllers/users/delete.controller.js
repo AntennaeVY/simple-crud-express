@@ -1,4 +1,4 @@
-const { deleteOneById } = require("../services/delete.service");
+const { deleteOneById } = require("../../services/users/delete.service");
 
 module.exports.deleteOneById = (req, res) => {
   try {
@@ -9,7 +9,7 @@ module.exports.deleteOneById = (req, res) => {
         return res.status(200).send(usr);
       })
       .catch((err) => {
-        return res.status(401).send(err);
+        return res.status(400).send(err);
       });
   } catch (err) {
     return res.status(500).send(err);
