@@ -4,8 +4,11 @@ module.exports.isAdmin = (req, res, next) => {
   }
 
   if (req.user.role != "ADMIN_ROLE") {
-    return res.status(401).send("Must be admin");
+    req.isAdmin = false;
+  } else {
+    req.isAdmin = true;
   }
 
+  
   next();
 };

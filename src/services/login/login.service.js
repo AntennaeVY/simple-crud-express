@@ -6,13 +6,13 @@ module.exports.login = async (email, password) => {
   const user = await getOneByEmail(email);
 
   if (!user) {
-    throw new Error();
+    throw new Error("Invalid email/password");
   }
 
   const isPasswordValid = comparePassword(password, user.password);
 
   if (!isPasswordValid) {
-    throw new Error();
+    throw new Error("Invalid email/password");
   }
 
   return createToken(user.toJSON());

@@ -24,7 +24,7 @@ router.get("/users/id/:id", isAuth, getOneById);
 router.post("/users/email", isAuth, getOneByEmail);
 
 // Update
-router.put("/users/id/:id", isAuth, updateOneById);
+router.put("/users/id/:id", isAuth, isAdmin, updateOneById);
 
 // Delete
 router.delete("/users/id/:id", isAuth, isAdmin, deleteOneById);

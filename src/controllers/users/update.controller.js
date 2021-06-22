@@ -5,8 +5,18 @@ module.exports.updateOneById = async (req, res) => {
     const id = req.params.id;
     const update = req.body;
 
-    if (!update || !id) {
+    console.log(req.user.id)
+
+    if (!update || !id ) {
       return res.status(400).send("No valid data provided");
+    }
+
+    if (req.user._id != id && !req.isAdmin) {
+      return res.status(401).send("Can't modify another user's info")
+    }
+
+    if (update.role && !req.isAdmin) {
+      return res.status(401).send("Can't change your role")
     }
 
     const result = await updateOneById(id, update);

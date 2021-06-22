@@ -13,7 +13,7 @@ module.exports.login = (req, res) => {
         return res.status(200).send(token);
       })
       .catch((err) => {
-        return res.status(400).send("Invalid email/password");
+        return res.status(400).send(err);
       });
   } catch (err) {
     return res.status(500).send(err.message);

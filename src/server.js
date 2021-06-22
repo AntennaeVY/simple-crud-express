@@ -5,6 +5,7 @@ require("./database/database");
 const routes = require("./routes/routes");
 
 // Middlewares
+app.use(express.static(`${__dirname}/public`))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);
