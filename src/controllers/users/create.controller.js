@@ -7,9 +7,9 @@ module.exports.createUser = (req, res) => {
         return res.status(200).send(usr);
       })
       .catch((err) => {
-        return res.status(400).send(err);
+        return res.status(400).send(err.message);
       });
   } catch (err) {
-    return res.status(500).send(err);
+    return res.status(500).send(err.message);
   }
 };

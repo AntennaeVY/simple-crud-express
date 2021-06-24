@@ -4,18 +4,18 @@ module.exports.deleteOneById = (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!req.isAdmin) {
-      return res.status(401).send("Must be admin");
+    if (!req.isAdmin && req.user._id != id) {
+      return res.status(401).send("Can't delete another user");
     }
 
-    return deleteOneById(id)
+    deleteOneById(id)
       .then((usr) => {
         return res.status(200).send(usr);
       })
       .catch((err) => {
-        return res.status(400).send(err);
+        return res.status(400).send(err.message);
       });
   } catch (err) {
-    return res.status(500).send(err);
+    return res.status(500).send(err.message);
   }
 };

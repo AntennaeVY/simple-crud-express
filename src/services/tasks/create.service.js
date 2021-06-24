@@ -1,6 +1,6 @@
-const User = require("../../models/user.model");
+const Task = require("../../models/task.model");
 
-module.exports.createUser = async (data) => {
+module.exports.createTask = async (data) => {
   if (!data) {
     throw new Error("No data provided");
   }
@@ -9,5 +9,5 @@ module.exports.createUser = async (data) => {
     throw new Error("Data must be an object");
   }
 
-  return await User.create(data);
+  return await Task.create(data);
 };

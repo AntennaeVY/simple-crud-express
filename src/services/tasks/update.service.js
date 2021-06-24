@@ -1,4 +1,4 @@
-const User = require("../../models/user.model");
+const Task = require("../../models/task.model");
 
 module.exports.updateOneById = async (id, update) => {
   if (!id) {
@@ -16,5 +16,5 @@ module.exports.updateOneById = async (id, update) => {
   if (typeof update != "object") {
     throw new Error("Update must be an object");
   }
-  return await User.findByIdAndUpdate(id, update, { new: true });
+  return await Task.findByIdAndUpdate(id, update, { new: true });
 };

@@ -1,4 +1,4 @@
-const User = require("../../models/user.model");
+const Task = require("../../models/task.model");
 
 module.exports.deleteOneById = async (id) => {
   if (!id) {
@@ -9,5 +9,5 @@ module.exports.deleteOneById = async (id) => {
     throw new Error("Id must be a number");
   }
 
-  return await User.findByIdAndDelete(id);
+  return await Task.findByIdAndDelete(id);
 };

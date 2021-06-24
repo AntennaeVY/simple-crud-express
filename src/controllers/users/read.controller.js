@@ -1,20 +1,20 @@
 const {
-  getAll,
+  getAllUsers,
   getOneById,
   getOneByEmail,
 } = require("../../services/users/read.service.js");
 
-module.exports.getAll = (req, res) => {
+module.exports.getAllUsers = (req, res) => {
   try {
-    return getAll()
+    getAllUsers()
       .then((allUsers) => {
         return res.status(200).send(allUsers);
       })
       .catch((err) => {
-        return res.status(404).send(err);
+        return res.status(404).send(err.message);
       });
   } catch (err) {
-    return res.status(500).send(err);
+    return res.status(500).send(err.message);
   }
 };
 
@@ -22,34 +22,29 @@ module.exports.getOneById = (req, res) => {
   try {
     const { id } = req.params;
 
-    return getOneById(id)
+    getOneById(id)
       .then((usr) => {
         return res.status(200).send(usr);
       })
       .catch((err) => {
-        return res.status(404).send(err);
+        console.log(err.message);
+        return res.status(404).send(err.message);
       });
   } catch (err) {
-    return res.status(500).send(err);
+    return res.status(500).send(err.message);
   }
 };
 
 module.exports.getOneByEmail = (req, res) => {
   try {
-    if (!req.body.email) {
-      return res.status(400).send("No email provided");
-    }
-
-    const { email } = req.body;
-
-    return getOneByEmail(email)
+    getOneByEmail(req.body.email)
       .then((usr) => {
         return res.status(200).send(usr);
       })
       .catch((err) => {
-        return res.status(404).send(err);
+        return res.status(400).send(err.message);
       });
   } catch (err) {
-    return res.status(500).send(err);
+    return res.status(500).send(err.message.message);
   }
 };

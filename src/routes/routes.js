@@ -1,4 +1,5 @@
-const userRoute = require("./users.route");
+const usersRoute = require("./users.route");
 const loginRoute = require("./login.route");
+const tasksRoutes = require("./tasks.route");
 
-module.exports = [userRoute, loginRoute];
+module.exports = [usersRoute, loginRoute, tasksRoutes];
