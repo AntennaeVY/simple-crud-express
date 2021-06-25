@@ -6,21 +6,25 @@ module.exports.updateOneById = async (req, res) => {
     const update = req.body;
 
     if (req.user._id != id && !req.isAdmin) {
-      return res.status(401).send("Can't modify another user's info");
+      return res
+        .status(401)
+        .json({ success: false, response: "Can't modify another user's info" });
     }
 
     if (update.role && !req.isAdmin) {
-      return res.status(401).send("Can't change your role");
+      return res
+        .status(401)
+        .json({ success: false, response: "Can't change your role" });
     }
 
     updateOneById(id, update)
       .then((usr) => {
-        return res.status(200).send(usr);
+        return res.status(200).json({ success: true, response: usr });
       })
       .catch((err) => {
-        return res.status(400).send(err.message);
+        return res.status(400).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };

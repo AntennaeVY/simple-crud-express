@@ -4,12 +4,12 @@ module.exports.createUser = (req, res) => {
   try {
     createUser(req.body)
       .then((usr) => {
-        return res.status(200).send(usr);
+        return res.status(200).json({ success: true, response: usr });
       })
       .catch((err) => {
-        return res.status(400).send(err.message);
+        return res.status(400).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };

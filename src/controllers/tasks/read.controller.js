@@ -9,18 +9,20 @@ const {
 module.exports.getAllTasks = (req, res) => {
   try {
     if (!req.isAdmin) {
-      return res.status(401).send("Must be admin to see all tasks");
+      return res
+        .status(401)
+        .json({ success: false, response: "Must be admin to see all tasks" });
     }
 
     getAllTasks()
       .then((allTasks) => {
-        return res.status(200).send(allTasks);
+        return res.status(200).json({ success: true, response: allTasks });
       })
       .catch((err) => {
-        return res.status(404).send(err.message);
+        return res.status(404).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };
 
@@ -29,18 +31,20 @@ module.exports.getAllOfUser = (req, res) => {
     const { userId } = req.params;
 
     if (!req.user.isAdmin && req.user._id != userId) {
-      return res.status(401).send("Can't see another user's tasks");
+      return res
+        .status(401)
+        .json({ success: false, response: "Can't see another user's tasks" });
     }
 
     getAllOfUser(userId)
       .then((tasks) => {
-        return res.status(200).send(tasks);
+        return res.status(200).json({ success: true, response: tasks });
       })
       .catch((err) => {
-        return res.status(400).send(err.message);
+        return res.status(400).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };
 
@@ -51,20 +55,25 @@ module.exports.getOneById = (req, res) => {
     getOneById(id)
       .then((task) => {
         if (!task) {
-          return res.status(400).send("That task doesn't exists");
+          return res
+            .status(400)
+            .json({ success: false, response: "That task doesn't exists" });
         }
 
         if (task._userId != req.user._id) {
-          return res.status(401).send("Can't see that task, is not yours");
+          return res.status(401).json({
+            success: false,
+            message: "Can't see that task, is not yours",
+          });
         }
 
-        return res.status(200).send(task);
+        return res.status(200).json({ success: true, response: task });
       })
       .catch((err) => {
-        return res.status(404).send(err.message);
+        return res.status(404).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };
 
@@ -73,16 +82,18 @@ module.exports.getOneOfUserByTitle = (req, res) => {
     getOneOfUserByTitle(req.body.title, req.user._id)
       .then((task) => {
         if (!task) {
-          return res.status(400).send("That task doesn't exists");
+          return res
+            .status(400)
+            .json({ success: false, response: "That task doesn't exists" });
         }
 
-        return res.status(200).send(task);
+        return res.status(200).json({ success: true, response: task });
       })
       .catch((err) => {
-        return res.status(400).send(err.message);
+        return res.status(400).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };
 
@@ -90,12 +101,12 @@ module.exports.getAllOfUserByStatus = (req, res) => {
   try {
     getAllOfUserByStatus(req.body.status, req.user._id)
       .then((tasks) => {
-        return res.status(200).send(tasks);
+        return res.status(200).json({ success: false, response: tasks });
       })
       .catch((err) => {
-        return res.status(400).send(err.message);
+        return res.status(400).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };

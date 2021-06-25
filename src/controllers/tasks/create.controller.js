@@ -9,12 +9,12 @@ module.exports.createTask = (req, res) => {
 
     createTask(data)
       .then((task) => {
-        return res.status(200).send(task);
+        return res.status(200).json({ success: true, response: task });
       })
       .catch((err) => {
-        return res.status(400).send(err.message);
+        return res.status(400).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };

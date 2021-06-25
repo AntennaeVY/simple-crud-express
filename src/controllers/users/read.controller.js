@@ -8,13 +8,13 @@ module.exports.getAllUsers = (req, res) => {
   try {
     getAllUsers()
       .then((allUsers) => {
-        return res.status(200).send(allUsers);
+        return res.status(200).json({ success: true, response: allUsers });
       })
       .catch((err) => {
-        return res.status(404).send(err.message);
+        return res.status(404).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };
 
@@ -24,14 +24,14 @@ module.exports.getOneById = (req, res) => {
 
     getOneById(id)
       .then((usr) => {
-        return res.status(200).send(usr);
+        return res.status(200).json({ success: true, response: usr });
       })
       .catch((err) => {
         console.log(err.message);
-        return res.status(404).send(err.message);
+        return res.status(404).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };
 
@@ -39,12 +39,12 @@ module.exports.getOneByEmail = (req, res) => {
   try {
     getOneByEmail(req.body.email)
       .then((usr) => {
-        return res.status(200).send(usr);
+        return res.status(200).json({ success: true, response: usr });
       })
       .catch((err) => {
-        return res.status(400).send(err.message);
+        return res.status(400).json({ success: false, response: err.message });
       });
   } catch (err) {
-    return res.status(500).send(err.message.message);
+    return res.status(500).json({ success: false, response: err.message });
   }
 };
