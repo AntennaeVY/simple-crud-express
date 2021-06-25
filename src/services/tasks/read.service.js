@@ -1,7 +1,7 @@
 const Task = require("../../models/task.model");
 
 module.exports.getAllTasks = async () => {
-  return await Task.find({});
+  return await Task.find({}).populate("user", "-_password");
 };
 
 module.exports.getAllOfUser = async (userId) => {
